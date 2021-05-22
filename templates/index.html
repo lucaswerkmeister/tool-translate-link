@@ -19,46 +19,6 @@
       check out the template source code (<code>templates/index.html</code>) for that.
     </p>
   </li>
-  <li>
-    <p>
-      <a href="{{ url_for('greet', name='John Doe') }}">The greeting endpoint</a> issues a simple greeting to an arbitrary person.
-      It demonstrates simple URL routes (you can append any name after <code>/greet/</code>, and it will appear in the page),
-      as well as simple templating (including the name in the page).
-      Try setting the name to something hilarious like <a href="{{ url_for('greet', name='<script>alert(\'pwnd\');') }}"><code>&lt;script&gt;alert('pwnd');</code></a>
-      to see how the template automatically escapes user input.
-      (The name can’t contain a slash, hence the missing <code>&lt;/script&gt;</code>.)
-    </p>
-  </li>
-  <li>
-    <p>
-      <a href="{{ url_for('praise') }}">The praising endpoint</a> serves several functions at once.
-      Its basic function is to heap praise upon the visitor.
-    </p>
-    <p>
-      The default praise is a very generic phrase,
-      but the page includes a form which allows users to set a different praise.
-      The praise is stored inside the user’s session,
-      demonstrating Flask’s session handling.
-      The form also includes a “CSRF token”,
-      and if the form is submitted with an incorrect token (or without one),
-      it is rejected and the session is not updated.
-      This isn’t the only way to do <abbr title="cross-site request forgery">CSRF</abbr> protection,
-      but it’s one fairly simple implementation;
-      <strong>you should never ever have forms without any CSRF protection.</strong>
-      (If you don’t want to implement CSRF error handling in every form endpoint,
-      take a look at the <code>require_valid_submitted_request</code> function.)
-    </p>
-    <p>
-      This page also includes OAuth support.
-      If OAuth has been configured (see below),
-      then the user can optionally log in using the link in the navigation bar,
-      and if they are logged in,
-      the page will praise them by name
-      and gender the default praise correctly
-      according to the gender they set in their MediaWiki preferences.
-      This demonstrates OAuth handling and how to make authenticated MediaWiki API requests.
-    </p>
-  </li>
   
   <li>
     <p>
