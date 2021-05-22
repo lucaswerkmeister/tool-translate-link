@@ -6,7 +6,7 @@ import os
 import random
 import string
 import toolforge
-from typing import Tuple, Union
+from typing import List, Tuple, Union
 import werkzeug
 import yaml
 
@@ -46,17 +46,11 @@ def redirect(key: str, language_code: str) \
         -> Union[werkzeug.Response, Tuple[str, int]]:
     session = mwapi.Session(host='https://translatewiki.net',
                             user_agent=user_agent)
-    search = session.get(action='query',
-                         list='search',
-                         srsearch=f'intitle:"{key}/qqq"',
-                         srnamespace='*',
-                         srinfo=[],
-                         srprop=[],
-                         formatversion=2)['query']['search']
-    if len(search) != 1:
+    titles = key_to_titles(key, session)
+    if len(titles) != 1:
         # TODO better error handling
         return 'Message key is ambiguous or does not exist :(', 400
-    title = search[0]['title']
+    title = titles[0]
     ttmserver = session.get(action='translationaids',
                             title=title,
                             prop=['ttmserver'])['helpers']['ttmserver']
@@ -65,6 +59,18 @@ def redirect(key: str, language_code: str) \
     # TODO replace the language code more robustly
     url = url.replace('language=qqq', f'language={language_code}')
     return flask.redirect(url)
+
+
+def key_to_titles(key: str, session: mwapi.Session) -> List[str]:
+    search = session.get(action='query',
+                         list='search',
+                         srsearch=f'intitle:"{key}/qqq"',
+                         srnamespace='*',
+                         srinfo=[],
+                         srprop=[],
+                         formatversion=2)['query']['search']
+    return [result['title']
+            for result in search]
 
 
 @app.after_request
