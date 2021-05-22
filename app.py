@@ -116,7 +116,8 @@ def index() -> str:
 
 
 @app.route('/redirect/<key>/<language_code>')
-def redirect(key: str, language_code: str) -> werkzeug.Response:
+def redirect(key: str, language_code: str) \
+        -> Union[werkzeug.Response, Tuple[str, int]]:
     session = mwapi.Session(host='https://translatewiki.net',
                             user_agent=user_agent)
     search = session.get(action='query',
