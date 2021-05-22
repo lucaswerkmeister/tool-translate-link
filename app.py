@@ -8,7 +8,6 @@ import re
 import string
 import toolforge
 from typing import List, Tuple, Union
-import urllib.parse
 import werkzeug
 import yaml
 
@@ -84,11 +83,9 @@ def title_to_url(title: str, session: mwapi.Session) -> str:
 
 
 def url_set_language(url: str, language_code: str) -> str:
-    u = urllib.parse.urlparse(url)
-    q = urllib.parse.parse_qs(u.query, keep_blank_values=True)
-    q['language'] = [language_code]
-    u = u._replace(query=urllib.parse.urlencode(q, doseq=True))
-    return urllib.parse.urlunparse(u)
+    return re.sub(r'([?&])language=qqq(&|#|$)',
+                  r'\1language=' + language_code + r'\2',
+                  url)
 
 
 @app.after_request
