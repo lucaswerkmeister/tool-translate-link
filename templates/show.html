@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block main %}
+{% if not urls %}
+<div class="alert alert-warning">
+  <h1>Message not found</h1>
+  <p>
+    We were not able to find the message <code>{{ key }}</code>.
+    Sorry!
+  </p>
+</div>
+{% elif urls | length == 1 %}
+{% set url = urls[0] %}
+<div class="alert alert-primary">
+  <h1>Translate link</h1>
+  <p>
+    Here is your link to translate the message <code>{{ key }}</code> into <code>{{ language_code }}</code>:
+  </p>
+  <p class="lead">
+    <a href="{{ url }}">{{ url }}</a>
+  </p>
+</div>
+{% else %}
+<div class="alert alert-primary">
+  <h1> Translate links</h1>
+  <p>
+    It looks like there are multiple messages with the key <code>{{ key }}</code>.
+    Hopefully one of these links is what you’re looking for:
+  </p>
+  <ul>
+    {% for url in urls %}
+    <li><a href="{{ url }}">{{ url }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endblock %}

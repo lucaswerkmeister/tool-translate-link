@@ -13,6 +13,12 @@
   <button
     type="submit"
     class="btn btn-primary"
+    formaction="{{ url_for('index_show') }}">
+    Show translate links
+  </button>
+  <button
+    type="submit"
+    class="btn btn-primary"
     formaction="{{ url_for('index_redirect') }}">
     Redirect to translate page
   </button>

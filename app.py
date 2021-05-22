@@ -34,12 +34,35 @@ def index() -> str:
     return flask.render_template('index.html')
 
 
-@app.route('/', methods=['POST'])
+@app.route('/show/', methods=['POST'])
+def index_show() -> werkzeug.Response:
+    url = flask.url_for('show',
+                        key=flask.request.form['key'],
+                        language_code=flask.request.form['language-code'])
+    return flask.redirect(url)
+
+
+@app.route('/redirect/', methods=['POST'])
 def index_redirect() -> werkzeug.Response:
     url = flask.url_for('redirect',
                         key=flask.request.form['key'],
                         language_code=flask.request.form['language-code'])
     return flask.redirect(url)
+
+
+@app.route('/show/<key>/<language_code>')
+def show(key: str, language_code: str) -> str:
+    session = mwapi.Session(host='https://translatewiki.net',
+                            user_agent=user_agent)
+    urls = []
+    for title in key_to_titles(key, session):
+        url = title_to_url(title, session)
+        url = url_set_language(url, language_code)
+        urls.append(url)
+    return flask.render_template('show.html',
+                                 key=key,
+                                 language_code=language_code,
+                                 urls=urls)
 
 
 @app.route('/redirect/<key>/<language_code>')
