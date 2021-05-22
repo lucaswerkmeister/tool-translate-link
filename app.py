@@ -77,7 +77,8 @@ def title_to_url(title: str, session: mwapi.Session) -> str:
                             title=title,
                             prop=['ttmserver'])['helpers']['ttmserver']
     urls = ['https://translatewiki.net' + result['editorUrl']
-            for result in ttmserver]
+            for result in ttmserver
+            if result['location'] == title]
     assert len(urls) == 1
     return urls[0]
 

@@ -38,8 +38,12 @@ def test_key_to_titles(key: str, titles: List[str]):
 
 
 @pytest.mark.parametrize('title, url', [
+    ('MediaWiki:Wikibase-setlabel-label/qqq',
+     'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikibase-setlabel-label&group=ext-wikibase-repo-interface&language=qqq'),  # noqa: E501
     ('Wikimedia:Wikidata-lexeme-forms-duplicates-warning/qqq',
      'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikidata-lexeme-forms-duplicates-warning&group=wikidata-lexeme-forms&language=qqq'),  # noqa: E501
+    ('MediaWiki:Parentheses/qqq',
+     'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=parentheses&group=core&language=qqq'),  # noqa: E501
 ])
 def test_title_to_url(title: str, url: str):
     assert translate_link.title_to_url(title, test_session) == url
