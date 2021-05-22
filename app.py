@@ -33,6 +33,14 @@ def index() -> str:
     return flask.render_template('index.html')
 
 
+@app.route('/', methods=['POST'])
+def index_redirect() -> werkzeug.Response:
+    url = flask.url_for('redirect',
+                        key=flask.request.form['key'],
+                        language_code=flask.request.form['language-code'])
+    return flask.redirect(url)
+
+
 @app.route('/redirect/<key>/<language_code>')
 def redirect(key: str, language_code: str) \
         -> Union[werkzeug.Response, Tuple[str, int]]:
