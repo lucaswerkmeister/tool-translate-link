@@ -47,3 +47,12 @@ def test_key_to_titles(key: str, titles: List[str]):
 ])
 def test_title_to_url(title: str, url: str):
     assert translate_link.title_to_url(title, test_session) == url
+
+
+@pytest.mark.parametrize('url, language_code, expected', [
+    ('https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikibase-setlabel-label&group=ext-wikibase-repo-interface&language=qqq',  # noqa: E501
+     'en',
+     'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikibase-setlabel-label&group=ext-wikibase-repo-interface&language=en'),  # noqa: E501
+])
+def test_url_set_language(url: str, language_code: str, expected: str):
+    assert translate_link.url_set_language(url, language_code) == expected

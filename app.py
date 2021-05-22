@@ -53,8 +53,7 @@ def redirect(key: str, language_code: str) \
         return 'Message key is ambiguous or does not exist :(', 400
     title = titles[0]
     url = title_to_url(title, session)
-    # TODO replace the language code more robustly
-    url = url.replace('language=qqq', f'language={language_code}')
+    url = url_set_language(url, language_code)
     return flask.redirect(url)
 
 
@@ -81,6 +80,11 @@ def title_to_url(title: str, session: mwapi.Session) -> str:
             if result['location'] == title]
     assert len(urls) == 1
     return urls[0]
+
+
+def url_set_language(url: str, language_code: str) -> str:
+    # TODO replace the language code more robustly
+    return url.replace('language=qqq', f'language={language_code}')
 
 
 @app.after_request
