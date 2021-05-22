@@ -115,6 +115,31 @@ def index() -> str:
     return flask.render_template('index.html')
 
 
+@app.route('/redirect/<key>/<language_code>')
+def redirect(key: str, language_code: str) -> werkzeug.Response:
+    session = mwapi.Session(host='https://translatewiki.net',
+                            user_agent=user_agent)
+    search = session.get(action='query',
+                         list='search',
+                         srsearch=f'intitle:"{key}/qqq"',
+                         srnamespace='*',
+                         srinfo=[],
+                         srprop=[],
+                         formatversion=2)['query']['search']
+    if len(search) != 1:
+        # TODO better error handling
+        return 'Message key is ambiguous or does not exist :(', 400
+    title = search[0]['title']
+    ttmserver = session.get(action='translationaids',
+                            title=title,
+                            prop=['ttmserver'])['helpers']['ttmserver']
+    assert len(ttmserver) == 1
+    url = 'https://translatewiki.net' + ttmserver[0]['editorUrl']
+    # TODO replace the language code more robustly
+    url = url.replace('language=qqq', f'language={language_code}')
+    return flask.redirect(url)
+
+
 @app.route('/greet/<name>')
 def greet(name: str) -> str:
     return flask.render_template('greet.html',
