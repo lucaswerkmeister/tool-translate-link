@@ -7,7 +7,7 @@ import random
 import re
 import string
 import toolforge
-from typing import List, Tuple, Union
+from typing import List
 import werkzeug
 import yaml
 
@@ -66,14 +66,16 @@ def show(key: str, language_code: str) -> str:
 
 
 @app.route('/redirect/<key>/<language_code>')
-def redirect(key: str, language_code: str) \
-        -> Union[werkzeug.Response, Tuple[str, int]]:
+def redirect(key: str, language_code: str) -> werkzeug.Response:
     session = mwapi.Session(host='https://translatewiki.net',
                             user_agent=user_agent)
     titles = key_to_titles(key, session)
     if len(titles) != 1:
-        # TODO better error handling
-        return 'Message key is ambiguous or does not exist :(', 400
+        # point to show(), which can handle other result counts
+        return flask.redirect(flask.url_for('show',
+                                            key=key,
+                                            language_code=language_code),
+                              code=303)  # See Other
     title = titles[0]
     url = title_to_url(title, session)
     url = url_set_language(url, language_code)
