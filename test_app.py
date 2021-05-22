@@ -35,3 +35,11 @@ test_session = mwapi.Session(host='https://translatewiki.net',
 ])
 def test_key_to_titles(key: str, titles: List[str]):
     assert translate_link.key_to_titles(key, test_session) == titles
+
+
+@pytest.mark.parametrize('title, url', [
+    ('Wikimedia:Wikidata-lexeme-forms-duplicates-warning/qqq',
+     'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikidata-lexeme-forms-duplicates-warning&group=wikidata-lexeme-forms&language=qqq'),  # noqa: E501
+])
+def test_title_to_url(title: str, url: str):
+    assert translate_link.title_to_url(title, test_session) == url

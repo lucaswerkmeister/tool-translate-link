@@ -52,11 +52,7 @@ def redirect(key: str, language_code: str) \
         # TODO better error handling
         return 'Message key is ambiguous or does not exist :(', 400
     title = titles[0]
-    ttmserver = session.get(action='translationaids',
-                            title=title,
-                            prop=['ttmserver'])['helpers']['ttmserver']
-    assert len(ttmserver) == 1
-    url = 'https://translatewiki.net' + ttmserver[0]['editorUrl']
+    url = title_to_url(title, session)
     # TODO replace the language code more robustly
     url = url.replace('language=qqq', f'language={language_code}')
     return flask.redirect(url)
@@ -74,6 +70,16 @@ def key_to_titles(key: str, session: mwapi.Session) -> List[str]:
     return [result['title']
             for result in search
             if re.fullmatch(pattern, result['title'], re.I)]
+
+
+def title_to_url(title: str, session: mwapi.Session) -> str:
+    ttmserver = session.get(action='translationaids',
+                            title=title,
+                            prop=['ttmserver'])['helpers']['ttmserver']
+    urls = ['https://translatewiki.net' + result['editorUrl']
+            for result in ttmserver]
+    assert len(urls) == 1
+    return urls[0]
 
 
 @app.after_request
