@@ -29,6 +29,9 @@ test_session = mwapi.Session(host='https://translatewiki.net',
     ('wikidata-lexeme-forms-duplicates-warning', [
         'Wikimedia:Wikidata-lexeme-forms-duplicates-warning/qqq',
     ]),
+    ('parentheses', [
+        'MediaWiki:Parentheses/qqq',
+    ]),
 ])
 def test_key_to_titles(key: str, titles: List[str]):
     assert translate_link.key_to_titles(key, test_session) == titles

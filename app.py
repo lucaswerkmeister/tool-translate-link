@@ -4,6 +4,7 @@ import flask
 import mwapi  # type: ignore
 import os
 import random
+import re
 import string
 import toolforge
 from typing import List, Tuple, Union
@@ -69,8 +70,10 @@ def key_to_titles(key: str, session: mwapi.Session) -> List[str]:
                          srinfo=[],
                          srprop=[],
                          formatversion=2)['query']['search']
+    pattern = r'[^:]*:' + re.escape(f'{key}/qqq')
     return [result['title']
-            for result in search]
+            for result in search
+            if re.fullmatch(pattern, result['title'], re.I)]
 
 
 @app.after_request
