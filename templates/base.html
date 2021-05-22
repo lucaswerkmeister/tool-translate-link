@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <title>{% block title %}Translate Link{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://tools-static.wmflabs.org/cdnjs/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    {% endblock head %}
+  </head>
+  <body>
+    <a href="#main" class="sr-only sr-only-focusable">Skip to main content</a>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <a href="{{ url_for('index') }}" class="navbar-brand">Translate Link</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a href="https://meta.wikimedia.org/wiki/User:Lucas_Werkmeister/Translate_Link" class="nav-link">Documentation</a></li>
+        <li class="nav-item"><a href="https://tools.wmflabs.org/" class="nav-link">Wikimedia Toolforge</a></li>
+        <li class="nav-item"><a href="https://phabricator.wikimedia.org/source/tool-translate-link/" class="nav-link">Source code</a></li>
+      </ul>
+      {{ authentication_area() }}
+    </nav>
+    <main id="main" class="container mt-3">
+      {% block main %}
+      {% endblock main %}
+    </main>
+  </body>
+</html>
