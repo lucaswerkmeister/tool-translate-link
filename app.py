@@ -7,7 +7,7 @@ import random
 import re
 import string
 import toolforge
-from typing import List
+from typing import List, Optional
 import werkzeug
 import yaml
 
@@ -97,20 +97,42 @@ def key_to_titles(key: str, session: mwapi.Session) -> List[str]:
 
 
 def title_to_url(title: str, session: mwapi.Session) -> str:
+    """Return some translate URL for the given title."""
+    return (title_to_url_ttm(title, session)
+            or title_to_url_edit(title))
+
+
+def title_to_url_ttm(title: str, session: mwapi.Session) -> Optional[str]:
+    """Try to find a translate URL for the given title using TTM.
+
+    This can fail if there are many messages with the same message text,
+    in which case the TTM results may not include the original message."""
     ttmserver = session.get(action='translationaids',
                             title=title,
                             prop=['ttmserver'])['helpers']['ttmserver']
     urls = ['https://translatewiki.net' + result['editorUrl']
             for result in ttmserver
             if result['location'] == title]
-    assert len(urls) == 1
-    return urls[0]
+    assert len(urls) <= 1
+    return urls[0] if urls else None
+
+
+def title_to_url_edit(title: str) -> str:
+    """Return an action=edit URL for the given title.
+
+    This should only be used as a final fallback,
+    but is better than nothing."""
+    return f'https://translatewiki.net/w/i.php?title={title}&action=edit'
 
 
 def url_set_language(url: str, language_code: str) -> str:
-    return re.sub(r'([?&])language=qqq(&|#|$)',
-                  r'\1language=' + language_code + r'\2',
-                  url)
+    url = re.sub(r'([?&])language=qqq(&|#|$)',
+                 r'\1language=' + language_code + r'\2',
+                 url)
+    url = re.sub(r'/qqq(&|#|$)',
+                 r'/' + language_code + r'\1',
+                 url)
+    return url
 
 
 @app.after_request

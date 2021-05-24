@@ -44,9 +44,31 @@ def test_key_to_titles(key: str, titles: List[str]):
      'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikidata-lexeme-forms-duplicates-warning&group=wikidata-lexeme-forms&language=qqq'),  # noqa: E501
     ('MediaWiki:Parentheses/qqq',
      'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=parentheses&group=core&language=qqq'),  # noqa: E501
+    ('MediaWiki:Wikisource-download-button/qqq',
+     'https://translatewiki.net/w/i.php?title=MediaWiki:Wikisource-download-button/qqq&action=edit'),  # noqa: E501
 ])
 def test_title_to_url(title: str, url: str):
     assert translate_link.title_to_url(title, test_session) == url
+
+
+@pytest.mark.parametrize('title, url', [
+    ('MediaWiki:Wikibase-setlabel-label/qqq',
+     'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikibase-setlabel-label&group=ext-wikibase-repo-interface&language=qqq'),  # noqa: E501
+    ('Wikimedia:Wikidata-lexeme-forms-duplicates-warning/qqq',
+     'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikidata-lexeme-forms-duplicates-warning&group=wikidata-lexeme-forms&language=qqq'),  # noqa: E501
+    ('MediaWiki:Parentheses/qqq',
+     'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=parentheses&group=core&language=qqq'),  # noqa: E501
+])
+def test_title_to_url_ttm(title: str, url: str):
+    assert translate_link.title_to_url_ttm(title, test_session) == url
+
+
+@pytest.mark.parametrize('title, url', [
+    ('MediaWiki:Wikisource-download-button/qqq',
+     'https://translatewiki.net/w/i.php?title=MediaWiki:Wikisource-download-button/qqq&action=edit'),  # noqa: E501
+])
+def test_title_to_url_edit(title: str, url: str):
+    assert translate_link.title_to_url_edit(title) == url
 
 
 @pytest.mark.parametrize('url, language_code, expected', [
@@ -59,6 +81,9 @@ def test_title_to_url(title: str, url: str):
     ('http://example.com?language=qqq#&other_language=qqq',
      'pt',
      'http://example.com?language=pt#&other_language=qqq'),
+    ('https://translatewiki.net/w/i.php?title=MediaWiki:Wikisource-download-button/qqq&action=edit',  # noqa: E501
+     'en',
+     'https://translatewiki.net/w/i.php?title=MediaWiki:Wikisource-download-button/en&action=edit'),  # noqa: E501
 ])
 def test_url_set_language(url: str, language_code: str, expected: str):
     assert translate_link.url_set_language(url, language_code) == expected
