@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block main %}
 <h1>Translate Link</h1>
+<p>
+  This tool generates a link to translate a single message into a certain language on TranslateWiki.net.
+</p>
 <form method="post">
   <div class="form-group">
     <label for="key">Message key</label>
@@ -14,7 +17,7 @@
     type="submit"
     class="btn btn-primary"
     formaction="{{ url_for('index_show') }}">
-    Show translate links
+    Show translate link
   </button>
   <button
     type="submit"
@@ -23,4 +26,14 @@
     Redirect to translate page
   </button>
 </form>
+<p class="mt-3">
+  On Wikimedia sites and other MediaWiki wikis,
+  you can discover many message keys by adding <code>?uselang=qqx</code> or <code>&amp;uselang=qqx</code> to the URL,
+  e.g. <a href="https://en.wikipedia.org/wiki/Main_Page?uselang=qqx">https://en.wikipedia.org/wiki/Main_Page?<strong>uselang=qqx</strong></a>
+  or <a href="https://en.wikipedia.org/w/index.php?title=Main_Page&amp;action=history&amp;uselang=qqx">https://en.wikipedia.org/w/index.php?title=Main_Page&amp;action=history&amp;<strong>uselang=qqx</strong></a>.
+  On English Wikipedia, a gadget to
+  <q cite="https://en.wikipedia.org/w/index.php?title=MediaWiki:Gadget-ShowMessageNames&oldid=707360174">reload the current page with the system message names exposed</q>
+  is available
+  (<a href="https://en.wikipedia.org/wiki/MediaWiki:Gadget-ShowMessageNames.js">source code</a>).
+</p>
 {% endblock %}
