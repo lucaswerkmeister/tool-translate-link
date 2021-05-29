@@ -8,6 +8,7 @@ import re
 import string
 import toolforge
 from typing import List, Optional
+import warnings
 import werkzeug
 import yaml
 
@@ -56,7 +57,7 @@ def show(key: str, language_code: str) -> str:
                             user_agent=user_agent)
     urls = []
     for title in key_to_titles(key, session):
-        url = title_to_url(title, session)
+        url = title_to_url(key, title, session)
         url = url_set_language(url, language_code)
         urls.append(url)
     return flask.render_template('show.html',
@@ -77,7 +78,7 @@ def redirect(key: str, language_code: str) -> werkzeug.Response:
                                             language_code=language_code),
                               code=303)  # See Other
     title = titles[0]
-    url = title_to_url(title, session)
+    url = title_to_url(key, title, session)
     url = url_set_language(url, language_code)
     return flask.redirect(url)
 
@@ -96,10 +97,31 @@ def key_to_titles(key: str, session: mwapi.Session) -> List[str]:
             if re.fullmatch(pattern, result['title'], re.I)]
 
 
-def title_to_url(title: str, session: mwapi.Session) -> str:
+def title_to_url(key: str, title: str, session: mwapi.Session) -> str:
     """Return some translate URL for the given title."""
-    return (title_to_url_ttm(title, session)
+    return (title_to_url_groups(key, title, session)
+            or title_to_url_ttm(title, session)
             or title_to_url_edit(title))
+
+
+def title_to_url_groups(key: str, title: str, session: mwapi.Session) \
+        -> Optional[str]:
+    """Try to find a translate URL for the given title using GroupsAid.
+
+    It’s not really clear if this can fail at all, to be honest."""
+    groups = session.get(action='translationaids',
+                         title=title,
+                         prop=['groups'])['helpers']['groups']
+    if groups:
+        group = groups[0]
+        return ('https://translatewiki.net/w/i.php'
+                '?title=Special:Translate'
+                f'&showMessage={key}'
+                f'&group={group}'
+                '&language=qqq')
+    else:
+        warnings.warn(f'translationaids gave no groups for {title} ({key})')
+        return None
 
 
 def title_to_url_ttm(title: str, session: mwapi.Session) -> Optional[str]:
