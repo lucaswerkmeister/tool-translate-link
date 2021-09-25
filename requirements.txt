@@ -3,5 +3,6 @@ flask
 mwapi
 pytest
 mypy
-pyyaml
+PyYAML
 toolforge
+types-PyYAML
