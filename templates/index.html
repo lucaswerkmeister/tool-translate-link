@@ -7,11 +7,11 @@
 <form method="post">
   <div class="form-group">
     <label for="key">Message key</label>
-    <input class="form-control" id="key" name="key" required placeholder="message-key">
+    <input class="form-control" id="key" name="key" required placeholder="message-key" value="{{ request.args.get('key', '') }}">
   </div>
   <div class="form-group">
     <label for="language-code">Language code</label>
-    <input class="form-control" id="language-code" name="language-code" required placeholder="en">
+    <input class="form-control" id="language-code" name="language-code" required placeholder="en" value="{{ request.args.get('language-code', '') }}">
   </div>
   <button
     type="submit"
