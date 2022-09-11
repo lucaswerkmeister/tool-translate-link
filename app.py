@@ -7,8 +7,7 @@ import random
 import re
 import string
 import toolforge
-from typing import List, Optional
-import warnings
+from typing import List
 import werkzeug
 import yaml
 
@@ -98,17 +97,7 @@ def key_to_titles(key: str, session: mwapi.Session) -> List[str]:
 
 
 def title_to_url(key: str, title: str, session: mwapi.Session) -> str:
-    """Return some translate URL for the given title."""
-    return (title_to_url_groups(key, title, session)
-            or title_to_url_ttm(title, session)
-            or title_to_url_edit(title))
-
-
-def title_to_url_groups(key: str, title: str, session: mwapi.Session) \
-        -> Optional[str]:
-    """Try to find a translate URL for the given title using GroupsAid.
-
-    It’s not really clear if this can fail at all, to be honest."""
+    """Find a translate URL for the given title using GroupsAid."""
     groups = session.get(action='translationaids',
                          title=title,
                          prop=['groups'])['helpers']['groups']
@@ -120,31 +109,8 @@ def title_to_url_groups(key: str, title: str, session: mwapi.Session) \
                 f'&group={group}'
                 '&language=qqq')
     else:
-        warnings.warn(f'translationaids gave no groups for {title} ({key})')
-        return None
-
-
-def title_to_url_ttm(title: str, session: mwapi.Session) -> Optional[str]:
-    """Try to find a translate URL for the given title using TTM.
-
-    This can fail if there are many messages with the same message text,
-    in which case the TTM results may not include the original message."""
-    ttmserver = session.get(action='translationaids',
-                            title=title,
-                            prop=['ttmserver'])['helpers']['ttmserver']
-    urls = ['https://translatewiki.net' + result['editorUrl']
-            for result in ttmserver
-            if result['location'] == title]
-    assert len(urls) <= 1
-    return urls[0] if urls else None
-
-
-def title_to_url_edit(title: str) -> str:
-    """Return an action=edit URL for the given title.
-
-    This should only be used as a final fallback,
-    but is better than nothing."""
-    return f'https://translatewiki.net/w/i.php?title={title}&action=edit'
+        description = 'translationaids gave no groups for {title} ({key})'
+        flask.abort(500, description=description)
 
 
 def url_set_language(url: str, language_code: str) -> str:
