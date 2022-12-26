@@ -103,6 +103,8 @@ def title_to_url(key: str, title: str, session: mwapi.Session) -> str:
                          prop=['groups'])['helpers']['groups']
     if groups:
         group = groups[0]
+        if 'mediawiki' in groups:
+            key = mediawiki_title_to_key(title, key)
         return ('https://translatewiki.net/w/i.php'
                 '?title=Special:Translate'
                 f'&showMessage={key}'
@@ -111,6 +113,27 @@ def title_to_url(key: str, title: str, session: mwapi.Session) -> str:
     else:
         description = f'translationaids gave no groups for {title} ({key})'
         flask.abort(500, description=description)
+
+
+def mediawiki_title_to_key(title: str, original_key: str) -> str:
+    """Turn a title for a MediaWiki message back into a message key.
+
+    This is necessary because the key may be in the wrong case;
+    for MediaWiki messages, we can determine the correct key from the title
+    (convert first character to lowercase, use the title’s case for the rest).
+    Do not use this function for non-MediaWiki titles or keys:
+    we don’t know how to convert the case for other systems."""
+    match = re.fullmatch(r'[^:]*:(.*)/qqq', title)
+    if match:
+        title_text = match[1]
+        key = title_text[0].lower() + title_text[1:]
+        if key.lower() == original_key.lower():
+            return key
+        description = (f'title {title} appears to belong to key {key}, '
+                       f'expected {original_key}')
+    else:
+        description = f'title {title} does not match expected format'
+    flask.abort(500, description=description)
 
 
 def url_set_language(url: str, language_code: str) -> str:

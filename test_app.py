@@ -41,6 +41,12 @@ def test_key_to_titles(key: str, titles: List[str]):
     ('wikibase-setlabel-label',
      'MediaWiki:Wikibase-setlabel-label/qqq',
      'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikibase-setlabel-label&group=ext-wikibase-repo-interface&language=qqq'),  # noqa: E501
+    ('Wikibase-setlabel-label',  # wrong case
+     'MediaWiki:Wikibase-setlabel-label/qqq',
+     'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikibase-setlabel-label&group=ext-wikibase-repo-interface&language=qqq'),  # noqa: E501
+    ('wIkIbAsE-sEtLaBeL-lAbEl',  # totally wrong case
+     'MediaWiki:Wikibase-setlabel-label/qqq',
+     'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikibase-setlabel-label&group=ext-wikibase-repo-interface&language=qqq'),  # noqa: E501
     ('wikidata-lexeme-forms-duplicates-warning',
      'Wikimedia:Wikidata-lexeme-forms-duplicates-warning/qqq',
      'https://translatewiki.net/w/i.php?title=Special:Translate&showMessage=wikidata-lexeme-forms-duplicates-warning&group=wikidata-lexeme-forms&language=qqq'),  # noqa: E501
