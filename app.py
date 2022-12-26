@@ -109,7 +109,7 @@ def title_to_url(key: str, title: str, session: mwapi.Session) -> str:
                 f'&group={group}'
                 '&language=qqq')
     else:
-        description = 'translationaids gave no groups for {title} ({key})'
+        description = f'translationaids gave no groups for {title} ({key})'
         flask.abort(500, description=description)
 
 
