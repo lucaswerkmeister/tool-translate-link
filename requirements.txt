@@ -4,27 +4,27 @@
 #
 #    pip-compile
 #
-aiohttp==3.8.4
+aiohttp==3.8.5
     # via mwapi
 aiosignal==1.3.1
     # via aiohttp
-async-timeout==4.0.2
+async-timeout==4.0.3
     # via aiohttp
 attrs==23.1.0
     # via aiohttp
 blinker==1.6.2
     # via flask
-certifi==2023.5.7
+certifi==2023.7.22
     # via requests
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
     # via
     #   aiohttp
     #   requests
-click==8.1.5
+click==8.1.7
     # via flask
-flake8==6.0.0
+flake8==6.1.0
     # via -r requirements.in
-flask==2.3.2
+flask==3.0.0
     # via -r requirements.in
 frozenlist==1.4.0
     # via
@@ -52,23 +52,23 @@ multidict==6.0.4
     #   yarl
 mwapi==0.6.1
     # via -r requirements.in
-mypy==1.4.1
+mypy==1.5.1
     # via -r requirements.in
 mypy-extensions==1.0.0
     # via mypy
-packaging==23.1
+packaging==23.2
     # via pytest
-pluggy==1.2.0
+pluggy==1.3.0
     # via pytest
-pycodestyle==2.10.0
+pycodestyle==2.11.0
     # via flake8
-pyflakes==3.0.1
+pyflakes==3.1.0
     # via flake8
 pymysql==1.1.0
     # via toolforge
-pytest==7.4.0
+pytest==7.4.2
     # via -r requirements.in
-pyyaml==6.0
+pyyaml==6.0.1
     # via -r requirements.in
 requests==2.31.0
     # via
@@ -76,13 +76,13 @@ requests==2.31.0
     #   toolforge
 toolforge==6.0.0
     # via -r requirements.in
-types-pyyaml==6.0.12.10
+types-pyyaml==6.0.12.12
     # via -r requirements.in
-typing-extensions==4.7.1
+typing-extensions==4.8.0
     # via mypy
-urllib3==2.0.3
+urllib3==2.0.6
     # via requests
-werkzeug==2.3.6
+werkzeug==3.0.0
     # via flask
 yarl==1.9.2
     # via aiohttp
