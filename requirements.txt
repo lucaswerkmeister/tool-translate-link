@@ -67,8 +67,6 @@ requests==2.32.4
     #   toolforge
 toolforge==6.1.0
     # via -r requirements.in
-typing-extensions==4.14.1
-    # via -r requirements.in
 urllib3==2.5.0
     # via requests
 werkzeug==3.1.3

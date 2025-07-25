@@ -4,5 +4,3 @@ mwapi
 pymysql @ git+https://github.com/PyMySQL/PyMySQL@main
 PyYAML
 toolforge
-# required by aiosignal 1.4.0 without declaring it; check if it can be removed later
-typing-extensions
