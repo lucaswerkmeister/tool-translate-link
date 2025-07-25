@@ -1,0 +1,5 @@
+-c requirements.txt
+flake8
+pytest
+mypy
+types-PyYAML

@@ -1,8 +1,4 @@
-flake8
 flask
 mwapi
-pytest
-mypy
 PyYAML
 toolforge
-types-PyYAML

@@ -22,8 +22,6 @@ click==8.2.1
     # via flask
 decorator==5.2.1
     # via toolforge
-flake8==7.3.0
-    # via -r requirements.in
 flask==3.1.1
     # via -r requirements.in
 frozenlist==1.7.0
@@ -34,8 +32,6 @@ idna==3.10
     # via
     #   requests
     #   yarl
-iniconfig==2.1.0
-    # via pytest
 itsdangerous==2.2.0
     # via flask
 jinja2==3.1.6
@@ -45,38 +41,18 @@ markupsafe==3.0.2
     #   flask
     #   jinja2
     #   werkzeug
-mccabe==0.7.0
-    # via flake8
 multidict==6.6.3
     # via
     #   aiohttp
     #   yarl
 mwapi==0.6.1
     # via -r requirements.in
-mypy==1.17.0
-    # via -r requirements.in
-mypy-extensions==1.1.0
-    # via mypy
-packaging==25.0
-    # via pytest
-pathspec==0.12.1
-    # via mypy
-pluggy==1.6.0
-    # via pytest
 propcache==0.3.2
     # via
     #   aiohttp
     #   yarl
-pycodestyle==2.14.0
-    # via flake8
-pyflakes==3.4.0
-    # via flake8
-pygments==2.19.2
-    # via pytest
 pymysql==1.1.1
     # via toolforge
-pytest==8.4.1
-    # via -r requirements.in
 pyyaml==6.0.2
     # via -r requirements.in
 requests==2.32.4
@@ -85,10 +61,6 @@ requests==2.32.4
     #   toolforge
 toolforge==6.1.0
     # via -r requirements.in
-types-pyyaml==6.0.12.20250516
-    # via -r requirements.in
-typing-extensions==4.14.1
-    # via mypy
 urllib3==2.5.0
     # via requests
 werkzeug==3.1.3

@@ -41,7 +41,7 @@ You can also run the tool locally, which is much more convenient for development
 ```
 git clone https://gitlab.wikimedia.org/toolforge-repos/translate-link.git
 cd tool-translate-link
-pip3 install -r requirements.txt
+pip3 install -r requirements.txt -r dev-requirements.txt
 FLASK_APP=app.py FLASK_ENV=development flask run
 ```
 
