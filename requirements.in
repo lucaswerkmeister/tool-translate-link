@@ -2,3 +2,5 @@ flask
 mwapi
 PyYAML
 toolforge
+# required by aiosignal 1.4.0 without declaring it; check if it can be removed later
+typing-extensions
