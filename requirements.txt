@@ -28,6 +28,8 @@ frozenlist==1.7.0
     # via
     #   aiohttp
     #   aiosignal
+gunicorn==23.0.0
+    # via -r requirements.in
 idna==3.10
     # via
     #   requests
@@ -47,12 +49,16 @@ multidict==6.6.3
     #   yarl
 mwapi==0.6.1
     # via -r requirements.in
+packaging==25.0
+    # via gunicorn
 propcache==0.3.2
     # via
     #   aiohttp
     #   yarl
-pymysql==1.1.1
-    # via toolforge
+pymysql @ git+https://github.com/PyMySQL/PyMySQL@main
+    # via
+    #   -r requirements.in
+    #   toolforge
 pyyaml==6.0.2
     # via -r requirements.in
 requests==2.32.4
