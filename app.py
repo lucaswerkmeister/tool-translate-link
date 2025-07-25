@@ -82,6 +82,11 @@ def redirect(key: str, language_code: str) -> werkzeug.Response:
     return flask.redirect(url)
 
 
+@app.route('/healthz')
+def health() -> str:
+    return ''
+
+
 def key_to_titles(key: str, session: mwapi.Session) -> List[str]:
     search = session.get(action='query',
                          list='search',
