@@ -2,7 +2,6 @@
 
 import flask
 import mwapi  # type: ignore
-import os
 import random
 import re
 import string
@@ -18,12 +17,13 @@ user_agent = toolforge.set_user_agent(
     'translate-link',
     email='translate-link@lucaswerkmeister.de')
 
-__dir__ = os.path.dirname(__file__)
-try:
-    with open(os.path.join(__dir__, 'config.yaml')) as config_file:
-        app.config.update(yaml.safe_load(config_file))
-except FileNotFoundError:
-    print('config.yaml file not found, assuming local development setup')
+app.config.from_file('config.yaml',
+                     load=toolforge.load_private_yaml,
+                     silent=True)
+app.config.from_prefixed_env('TOOL',
+                             loads=yaml.safe_load)
+if app.secret_key is None:
+    print('No configuration found, assuming local development setup')
     characters = string.ascii_letters + string.digits
     random_string = ''.join(random.choice(characters) for _ in range(64))
     app.secret_key = random_string
