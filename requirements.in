@@ -1,6 +1,5 @@
 flask
 gunicorn
 mwapi
-pymysql @ git+https://github.com/PyMySQL/PyMySQL@main
 PyYAML
 toolforge

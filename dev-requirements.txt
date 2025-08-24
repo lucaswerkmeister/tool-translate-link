@@ -10,13 +10,13 @@ iniconfig==2.1.0
     # via pytest
 mccabe==0.7.0
     # via flake8
-mypy==1.17.0
+mypy==1.17.1
     # via -r dev-requirements.in
 mypy-extensions==1.1.0
     # via mypy
 packaging==25.0
     # via
-    #   -c /home/lucas/git/translate-link/requirements.txt
+    #   -c requirements.txt
     #   pytest
 pathspec==0.12.1
     # via mypy
@@ -30,7 +30,7 @@ pygments==2.19.2
     # via pytest
 pytest==8.4.1
     # via -r dev-requirements.in
-types-pyyaml==6.0.12.20250516
+types-pyyaml==6.0.12.20250822
     # via -r dev-requirements.in
 typing-extensions==4.14.1
     # via mypy
